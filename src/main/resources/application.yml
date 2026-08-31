@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product-migration
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  batch:
+    jdbc:
+      initialize-schema: always

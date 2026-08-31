@@ -1,0 +1,31 @@
+-- originalテーブルの作成
+CREATE TABLE original(
+id INTEGER PRIMARY KEY,
+name TEXT,
+condition_id INTEGER,
+category_name TEXT,
+brand TEXT,
+price DOUBLE PRECISION,
+shipping INTEGER,
+description TEXT
+);
+
+-- categoryテーブルの作成
+CREATE TABLE category(
+id SERIAL PRIMARY KEY,
+parent_id INTEGER REFERENCES category(id),
+name TEXT NOT NULL,
+name_all TEXT
+);
+
+-- itemsテーブルの作成
+CREATE TABLE items(
+id SERIAL PRIMARY KEY,
+name TEXT,
+condition INTEGER,
+category INTEGER REFERENCES category(id),
+brand TEXT,
+price DOUBLE PRECISION,
+shipping INTEGER,
+description TEXT
+);
