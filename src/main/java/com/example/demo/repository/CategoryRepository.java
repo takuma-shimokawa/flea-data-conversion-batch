@@ -11,6 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.domain.Category;
 
+/**
+ * categoryテーブルへの検索・登録処理を行うRepository。
+ *
+ * カテゴリの親IDと名前による検索、新規カテゴリの登録、
+ * itemsStepで使用するname_allとcategory.idの対応表取得を行う。
+ */
 @Repository
 public class CategoryRepository {
 
@@ -22,11 +28,11 @@ public class CategoryRepository {
     }
 
     /**
-     * categoryのparentIdとnameを条件に検索し、
-     * 一致するcategory.idを取得する
-     * 
-     * @param category
-     * @return
+     * parentIdとカテゴリ名を条件にcategoryテーブルを検索し、
+     * 一致するcategory.idを取得する。
+     *
+     * @param category 検索条件となるnameとparentIdを保持するCategory
+     * @return 一致したcategory.idの一覧。存在しない場合は空のList
      */
     public List<Integer> findIdByParentIdAndName(Category category) {
         // 検索条件として使用するカテゴリ名を取得
@@ -72,10 +78,10 @@ public class CategoryRepository {
 
     /**
      * categoryテーブルにカテゴリを1件登録し、
-     * DBで自動採番されたidを返す。
-     * 
-     * @param category
-     * @return
+     * DBで自動採番されたidを取得する。
+     *
+     * @param category 登録するカテゴリ情報
+     * @return DBで自動採番されたcategory.id
      */
     public Integer insertAndGetId(Category category) {
 
@@ -112,6 +118,12 @@ public class CategoryRepository {
 
     }
 
+    /**
+     * itemsStepでカテゴリIDを検索するため、
+     * categoryテーブルからname_allとidの対応表を取得する。
+     *
+     * @return name_allをキー、category.idを値とするMap
+     */
     public Map<String, Integer> findCategoryIdMap() {
 
         String sql = """
