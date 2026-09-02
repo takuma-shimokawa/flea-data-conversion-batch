@@ -94,4 +94,6 @@ public class Item {
         this.description = description;
     }
 
+    public Item(){}
+
 }

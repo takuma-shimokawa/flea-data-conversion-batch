@@ -26,6 +26,7 @@ public class ItemReader {
                  + "brand,price,shipping,description "
                  + "FROM original;"
             )
+            .rowMapper(ORIGINAL_ROW_MAPPER)
             .build();
     }
 
@@ -33,8 +34,8 @@ public class ItemReader {
         Original original = new Original();
         original.setId(rs.getInt("id"));
         original.setName(rs.getString("name"));
-        original.setConditionId(rs.getInt("conditionId"));
-        original.setCategoryName(rs.getString("categoryName"));
+        original.setConditionId(rs.getInt("condition_id"));
+        original.setCategoryName(rs.getString("category_name"));
         original.setBrand(rs.getString("brand"));
         original.setPrice(rs.getDouble("price"));
         original.setShipping(rs.getInt("shipping"));
