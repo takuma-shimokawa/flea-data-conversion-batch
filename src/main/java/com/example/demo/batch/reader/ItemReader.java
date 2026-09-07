@@ -35,7 +35,8 @@ public class ItemReader {
                 .dataSource(dataSource)
                 .sql("SELECT id,name,condition_id,category_name,"
                         + "brand,price,shipping,description "
-                        + "FROM original;")
+                        + "FROM original "
+                        + "ORDER BY id;")
                 .rowMapper(ORIGINAL_ROW_MAPPER)
                 .build();
     }

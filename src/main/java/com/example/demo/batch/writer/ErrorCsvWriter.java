@@ -1,8 +1,7 @@
 package com.example.demo.batch.writer;
 
 import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.file.FlatFileItemWriter;
@@ -16,8 +15,10 @@ import com.example.demo.domain.Original;
 /**
  * ItemProcessorでエラーと判定された商品データをCSVへ出力するWriter。
  *
- * <p>FlatFileItemWriterを利用し、itemsStep開始時にエラーCSVを作成して、
- * エラーデータを1件ずつ出力する。</p>
+ * <p>
+ * FlatFileItemWriterを利用し、itemsStep開始時にエラーCSVを作成して、
+ * エラーデータを1件ずつ出力する。
+ * </p>
  */
 @Component
 @StepScope
@@ -27,17 +28,15 @@ public class ErrorCsvWriter extends FlatFileItemWriter<ItemProcessResult> {
      * application.ymlのCSV出力設定を使用してErrorCsvWriterを生成する。
      *
      * @param properties エラーCSVの出力パス・ファイル名を保持する設定クラス
+     * @param runId 同一Jobのリスタート時に同じCSVを使用するためのJobParameter
      */
-    public ErrorCsvWriter(ErrorCsvProperties properties) {
+    public ErrorCsvWriter(ErrorCsvProperties properties,
+            @Value("#{jobParameters['run.id']}") String runId) {
 
-        // バッチ実行ごとに異なるCSVファイル名を作成するため、現在日時を取得
-        String dateTime = LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        // 同じJobのリスタート時に同じCSVを使用できるよう、
+        // JobParameterのrun.idをファイル名に使用する
+        String fileName = String.format(properties.getFileName(), runId);
 
-        // application.ymlで設定したファイル名の%s部分を実行日時へ置き換える
-        String fileName = String.format(properties.getFileName(), dateTime);
-
-        // application.ymlの出力パスとファイル名を組み合わせる
         Path outputFile = Path.of(properties.getOutputPath(), fileName);
 
         // 出力するCSVファイルを設定

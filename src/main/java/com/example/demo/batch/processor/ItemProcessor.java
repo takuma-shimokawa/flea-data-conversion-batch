@@ -51,7 +51,7 @@ public class ItemProcessor implements org.springframework.batch.item.ItemProcess
         if (original.getCategoryName().isEmpty()) {
             ItemProcessResult itemProcessResult = new ItemProcessResult();
             itemProcessResult.setOriginal(original);
-            itemProcessResult.setErrorReason(ErrorReason.CATEGORY_NULL);
+            itemProcessResult.setErrorReason(ErrorReason.CATEGORY_EMPTY);
             return itemProcessResult;
         }
 
@@ -59,7 +59,7 @@ public class ItemProcessor implements org.springframework.batch.item.ItemProcess
         if (parts.length < 3) {
             ItemProcessResult itemProcessResult = new ItemProcessResult();
             itemProcessResult.setOriginal(original);
-            itemProcessResult.setErrorReason(ErrorReason.CATEGORY_NULL);
+            itemProcessResult.setErrorReason(ErrorReason.CATEGORY_LEVEL_INSUFFICIENT);
             return itemProcessResult;
         }
 
@@ -68,7 +68,7 @@ public class ItemProcessor implements org.springframework.batch.item.ItemProcess
         if (!categoryIdMap.containsKey(nameAll)) {
             ItemProcessResult itemProcessResult = new ItemProcessResult();
             itemProcessResult.setOriginal(original);
-            itemProcessResult.setErrorReason(ErrorReason.CATEGORY_NULL);
+            itemProcessResult.setErrorReason(ErrorReason.CATEGORY_NOT_FOUND);
             return itemProcessResult;
         }
 
