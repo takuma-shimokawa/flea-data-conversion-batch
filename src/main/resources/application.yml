@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product-migration
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  batch:
+    jdbc:
+      initialize-schema: always
+
+batch:
+  chunk-size: 5000
+
+  error-csv:
+    output-path: .
+    file-name: error_%s.csv
